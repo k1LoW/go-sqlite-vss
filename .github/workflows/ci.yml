@@ -9,7 +9,10 @@ on:
 jobs:
   test:
     name: Test
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.platform }}
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -22,10 +25,12 @@ jobs:
           go-version-file: go.mod
 
       - name: Run lint
+        if: matrix.platform == 'ubuntu-latest'
         uses: reviewdog/action-golangci-lint@v2
 
       - name: Run tests
         run: make ci
 
       - name: Run octocov
+        if: matrix.platform == 'ubuntu-latest'
         uses: k1LoW/octocov-action@v0
