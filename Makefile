@@ -16,7 +16,7 @@ depsdev:
 	gh ext install k1LoW/gh-setup --force
 	rm -rf ${SQLITE_VSS_EXT_PATH}
 	mkdir ${SQLITE_VSS_EXT_PATH}
-	gh setup --repo github.com/asg017/sqlite-vss --bin-dir ${SQLITE_VSS_EXT_PATH}/ --match sqlite-vss-v.*-loadable --skip-content-type-check
+	gh setup --repo github.com/asg017/sqlite-vss --bin-dir ${SQLITE_VSS_EXT_PATH} --match sqlite-vss-v.*-loadable --skip-content-type-check
 
 prerelease_for_tagpr: depsdev
 	go mod tidy
