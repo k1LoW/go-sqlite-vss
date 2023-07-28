@@ -11,7 +11,7 @@ jobs:
     name: Test
     strategy:
       matrix:
-        platform: [ubuntu-latest, macos-latest]
+        platform: [ubuntu-latest, macos-13]
     runs-on: ${{ matrix.platform }}
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -23,10 +23,6 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version-file: go.mod
-
-      - name: Setup SQLite
-        if: matrix.platform == 'macos-latest'
-        run: brew install sqlite
 
       - name: Run lint
         if: matrix.platform == 'ubuntu-latest'
