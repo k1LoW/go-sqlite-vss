@@ -24,8 +24,8 @@ var vssExts = []ext{
 
 func init() {
 	if e := os.Getenv("SQLITE_VSS_EXT_PATH"); e != "" {
-		vecExts = append(vecExts, ext{filepath.Join(e, "vector0"), "sqlite3_vector_init"})
-		vssExts = append(vssExts, ext{filepath.Join(e, "vss0"), "sqlite3_vss_init"})
+		vecExts = append([]ext{{filepath.Join(e, "vector0"), "sqlite3_vector_init"}}, vecExts...)
+		vssExts = append([]ext{{filepath.Join(e, "vss0"), "sqlite3_vss_init"}}, vssExts...)
 	}
 	sql.Register("sqlite-vss", &sqlite3.SQLiteDriver{
 		ConnectHook: func(conn *sqlite3.SQLiteConn) error {
