@@ -24,6 +24,10 @@ jobs:
         with:
           go-version-file: go.mod
 
+      - name: Setup SQLite
+        if: matrix.platform == 'macos-latest'
+        run: brew install sqlite
+
       - name: Run lint
         if: matrix.platform == 'ubuntu-latest'
         uses: reviewdog/action-golangci-lint@v2
