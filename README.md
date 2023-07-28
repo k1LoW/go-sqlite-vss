@@ -7,7 +7,7 @@
 Install [vector0 and vss0](https://github.com/asg017/sqlite-vss/releases).
 
 ``` console
-# An example installation
+$ # An example installation
 $ gh ext install k1LoW/gh-setup
 $ gh setup --repo github.com/asg017/sqlite-vss --bin-dir ${SQLITE_VSS_EXT_PATH} --match sqlite-vss-v.*-loadable --skip-content-type-check
 ```
