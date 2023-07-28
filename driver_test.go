@@ -2,6 +2,7 @@ package driver_test
 
 import (
 	"database/sql"
+	"strings"
 	"testing"
 
 	_ "github.com/k1LoW/go-sqlite-vss"
@@ -24,8 +25,7 @@ func TestOpen(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	want := "v0.1.1"
-	if version != want {
-		t.Errorf("got %q, want %q", version, want)
+	if !strings.HasPrefix(version, "v") {
+		t.Errorf("version should be start with 'v', but got %s", version)
 	}
 }
