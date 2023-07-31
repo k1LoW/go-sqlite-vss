@@ -26,4 +26,11 @@ prerelease_for_tagpr: depsdev
 release:
 	git push origin main --tag
 
-.PHONY: default test
+testdata:
+	mkdir -p testdata
+	curl https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.en.300.vec.gz -o testdata/cc.en.300.vec.gz
+	cd testdata && gzip -d cc.en.300.vec.gz
+	head -1001  testdata/cc.en.300.vec | tail +2 > testdata/test.vec
+	rm testdata/cc.en.300.vec.gz
+
+.PHONY: default test testdata

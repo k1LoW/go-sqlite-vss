@@ -7,7 +7,7 @@ import (
 )
 
 func ExampleOpen() {
-	db, err := sql.Open("sqlite-vss", "test.db")
+	db, err := sql.Open("sqlite-vss", "tmp.db")
 	if err != nil {
 		log.Fatal(err)
 	}

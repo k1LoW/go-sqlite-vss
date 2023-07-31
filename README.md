@@ -44,3 +44,11 @@ func main() {
 	// Output: v0.1.1
 }
 ```
+
+## Test data
+
+- [testdata/test.vec](testdata/test.vec) is created using data https://fasttext.cc/docs/en/crawl-vectors.html .
+    - License
+        - The word vectors are distributed under the [Creative Commons Attribution-Share-Alike License 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
+    - References
+        - [E. Grave*, P. Bojanowski*, P. Gupta, A. Joulin, T. Mikolov, Learning Word Vectors for 157 Languages](https://arxiv.org/abs/1802.06893)
