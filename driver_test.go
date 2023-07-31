@@ -76,25 +76,22 @@ func TestVectorSearch(t *testing.T) {
 	// food
 	var foodvec string
 
+	rowid := 1
 	for scanner.Scan() {
 		row := scanner.Text()
 		splitted := strings.Split(row, " ")
-		word := splitted[0]
+		label := splitted[0]
 		vec := "[" + strings.Join(splitted[1:], ",") + "]"
-		if word == "food" {
+		if label == "food" {
 			foodvec = vec
 		}
-		if _, err := db.ExecContext(ctx, `INSERT INTO words (label, vector) VALUES (?, ?);`, word, vec); err != nil {
+		if _, err := db.ExecContext(ctx, `INSERT INTO words (rowid, label) VALUES (?, ?);`, rowid, label); err != nil {
 			t.Fatal(err)
 		}
-	}
-
-	if _, err := db.ExecContext(ctx, `UPDATE words SET vector = vector_to_blob(vector_from_json(vector));`); err != nil {
-		t.Fatal(err)
-	}
-
-	if _, err := db.ExecContext(ctx, `INSERT INTO vss_words(rowid, vector) SELECT rowid, vector FROM words;`); err != nil {
-		t.Fatal(err)
+		if _, err := db.ExecContext(ctx, `INSERT INTO vss_words(rowid, vector) VALUES (?, json(?));`, rowid, vec); err != nil {
+			t.Fatal(err)
+		}
+		rowid++
 	}
 
 	if _, err := db.ExecContext(ctx, `VACUUM;`); err != nil {
