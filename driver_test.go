@@ -114,8 +114,7 @@ func TestVectorSearch(t *testing.T) {
 			label string
 			dist  float64
 		)
-		err := rows.Scan(&label, &dist)
-		if err != nil {
+		if err := rows.Scan(&label, &dist); err != nil {
 			t.Fatal(err)
 		}
 		got[label] = dist
