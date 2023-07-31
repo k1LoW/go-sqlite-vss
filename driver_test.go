@@ -51,8 +51,7 @@ func TestVectorSearch(t *testing.T) {
 
 	// Create table
 	if _, err := db.ExecContext(ctx, `CREATE TABLE words (
-    label  TEXT,
-	  vector BLOB
+  label TEXT
 );`); err != nil {
 		t.Fatal(err)
 	}
