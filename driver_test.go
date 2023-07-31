@@ -72,11 +72,18 @@ func TestVectorSearch(t *testing.T) {
 	})
 	scanner := bufio.NewScanner(f)
 	scanner.Split(bufio.ScanLines)
+
+	// food
+	var foodvec string
+
 	for scanner.Scan() {
 		row := scanner.Text()
 		splitted := strings.Split(row, " ")
 		word := splitted[0]
 		vec := "[" + strings.Join(splitted[1:], ",") + "]"
+		if word == "food" {
+			foodvec = vec
+		}
 		if _, err := db.ExecContext(ctx, `INSERT INTO words (label, vector) VALUES (?, ?);`, word, vec); err != nil {
 			t.Fatal(err)
 		}
@@ -99,10 +106,10 @@ func TestVectorSearch(t *testing.T) {
   WHERE vss_search(
     v.vector,
     vss_search_params(
-      (select vector from words where label = 'food'),
+      json(?),
       10
     )
-  );`)
+  );`, foodvec)
 	if err != nil {
 		t.Fatal(err)
 	}
