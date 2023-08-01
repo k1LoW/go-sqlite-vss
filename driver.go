@@ -3,6 +3,7 @@ package driver
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 	"os"
 	"path/filepath"
 
@@ -30,25 +31,31 @@ func init() {
 	sql.Register("sqlite-vss", &sqlite3.SQLiteDriver{
 		ConnectHook: func(conn *sqlite3.SQLiteConn) error {
 			vecLoaded := false
+			var errs []error
 			for _, v := range vecExts {
-				if err := conn.LoadExtension(v.lib, v.entry); err == nil {
+				err := conn.LoadExtension(v.lib, v.entry)
+				if err == nil {
 					vecLoaded = true
 					break
 				}
+				errs = append(errs, err)
 			}
 			if !vecLoaded {
-				return errors.New("vector extension not found. the extension must be located in the current directory or in the directory specified by the environment variable SQLITE_VSS_EXT_PATH. ref: https://github.com/asg017/sqlite-vss/releases")
+				return fmt.Errorf("vector extension load error: %w\nhint: the extension must be located in the current directory or in the directory specified by the environment variable SQLITE_VSS_EXT_PATH.", errors.Join(errs...))
 			}
 
 			vssLoaded := false
+			errs = nil
 			for _, v := range vssExts {
-				if err := conn.LoadExtension(v.lib, v.entry); err == nil {
+				err := conn.LoadExtension(v.lib, v.entry)
+				if err == nil {
 					vssLoaded = true
 					break
 				}
+				errs = append(errs, err)
 			}
 			if !vssLoaded {
-				return errors.New("vss extension not found. the extension must be located in the current directory or in the directory specified by the environment variable SQLITE_VSS_EXT_PATH. ref: https://github.com/asg017/sqlite-vss/releases")
+				return fmt.Errorf("vss extension load error: %w\nhint: the extension must be located in the current directory or in the directory specified by the environment variable SQLITE_VSS_EXT_PATH.", errors.Join(errs...))
 			}
 
 			return nil
