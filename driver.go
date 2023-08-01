@@ -41,7 +41,7 @@ func init() {
 				errs = append(errs, err)
 			}
 			if !vecLoaded {
-				return fmt.Errorf("vector extension load error: %w\nhint: the extension must be located in the current directory or in the directory specified by the environment variable SQLITE_VSS_EXT_PATH.", errors.Join(errs...))
+				return fmt.Errorf("vector0 extension load error: %w\nhint: the extension must be located in the current directory or in the directory specified by the environment variable SQLITE_VSS_EXT_PATH.", errors.Join(errs...))
 			}
 
 			vssLoaded := false
@@ -55,7 +55,7 @@ func init() {
 				errs = append(errs, err)
 			}
 			if !vssLoaded {
-				return fmt.Errorf("vss extension load error: %w\nhint: the extension must be located in the current directory or in the directory specified by the environment variable SQLITE_VSS_EXT_PATH.", errors.Join(errs...))
+				return fmt.Errorf("vss0 extension load error: %w\nhint: the extension must be located in the current directory or in the directory specified by the environment variable SQLITE_VSS_EXT_PATH.", errors.Join(errs...))
 			}
 
 			return nil
